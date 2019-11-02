@@ -1,7 +1,10 @@
+import os
+
 from django.http import HttpResponse
 from django.views.generic import TemplateView
-from fastai import *
-from fastai.vision import *
+from django.conf import settings
+from fastai.basic_train import load_learner
+from fastai.vision import Learner
 
 class UploadImageView(TemplateView):
     template_name = 'webb/image_upload.html'
@@ -9,9 +12,11 @@ class UploadImageView(TemplateView):
     def post(self, request, *args, **kwargs):
         return HttpResponse(content=b'Hello this would display the inference from the model')
 
-    def get_classified_prob(image):
-        learn = load_learner(path=str(base_path / 'cohort_models/'), file='childproof_electrical_chicago.pkl')
-        prediction = learn.predict(image)
+    def get_classified_prob(self, img):
+        learn: Learner = load_learner(
+            path=os.path.join(settings.BASE_DIR, 'vandydj/ai_models/'), file='model_v1.pkl'
+        )
+        prediction = learn.predict(img)
         label = prediction[0]
         # print(label)
         prob = max(prediction[2])
