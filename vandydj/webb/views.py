@@ -1,27 +1,26 @@
-import json
 import os
-import urllib
 import requests
 import random
 import urllib.parse
 
-import cv2
-import numpy as np
-from django.http import HttpResponse, JsonResponse, HttpResponseRedirect
+import urllib, json
+import urllib.request
+
+
+from django.http import JsonResponse, HttpResponseRedirect
 from django.views.generic import TemplateView
 from django.conf import settings
 from django.template.response import TemplateResponse
 from django.core.cache import cache
 
 from fastai.basic_train import load_learner
-from fastai.vision import Learner, pil2tensor
-from fastai.vision import Image as fImage
+from fastai.vision import Learner
 from vandydj.webb.forms import ImageUploadForm
-from oauthlib.oauth2 import BackendApplicationClient
 from requests_oauthlib import OAuth2Session
 
 
 class UploadImageView(TemplateView):
+    API_KEY = "5ry4t1e9gIwcBEczcQtQz7UkbmS5v3iK"
     template_name = 'webb/image_upload.html'
 
     def get(self, request, *args, **kwargs):
@@ -93,7 +92,7 @@ class UploadImageView(TemplateView):
     @staticmethod
     def get_classified_gif(label):
         data = json.loads(
-            urllib.urlopen("http://api.giphy.com/v1/gifs/search?q=f'{label}'&api_key=YOUR_API_KEY&limit=1").read())
+            urllib.request.urlopen("http://api.giphy.com/v1/gifs/search?q=f'{label}'&api_key=API_KEY&limit=1").read())
         print(json.dumps(data, sort_keys=True, indent=4))
 
     @staticmethod
