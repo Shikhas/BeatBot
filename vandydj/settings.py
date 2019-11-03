@@ -126,3 +126,7 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 DEFUALT_CONTENT_TYPE = 'text/html'
+
+STATICFILES_DIRS = [
+    os.path.join(BASE_DIR, 'vandydj/static/')
+]

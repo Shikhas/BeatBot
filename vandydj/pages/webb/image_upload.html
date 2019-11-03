@@ -13,22 +13,16 @@
     cursor: pointer;
 }
 </style>
-
+{% endblock %}
 {% block content %}
-  <form method="post" enctype="multipart/form-data">
-    {% csrf_token %}
-    {{ form.errors }}
-    {{ form.as_p }}
-    <button type="button", type="submit">Ready to roll !</button>
-  </form>
 
 <style>
 img {
   border-radius: 8px;
 }
 </style>
-
-<img src="VHlogo.jpg" alt="VHLogo" width="300" height="300">
+{% load static %}
+<img src="{% static "VHlogo.png" %}" alt="VHLogo" width="300" height="300">
 
 <style>
 img2 {
@@ -36,6 +30,11 @@ img2 {
 }
 </style>
 
-<img src="http://gph.is/1fio4FZ" alt="DJ" width="300" height="300">
-
+<img src="{% static "giphyy.gif" %}"  alt="DJ" width="300" height="300">
+<form method="post" enctype="multipart/form-data">
+    {% csrf_token %}
+    {{ form.errors }}
+    {{ form.as_p }}
+    <button class="button", type="submit">Ready to roll !</button>
+  </form>
 {% endblock %}

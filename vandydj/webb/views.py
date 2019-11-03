@@ -25,17 +25,12 @@ class UploadImageView(TemplateView):
         img_form = ImageUploadForm(request.POST, request.FILES)
         if img_form.is_valid():
             print("Hello")
-            # form_img = request.FILES['image'].image
             form_img = img_form.cleaned_data['image'].image
-            #form_img = form_img.convert('RGB')
-            #frame = cv2.cvtColor(form_img, cv2.COLOR_BGR2RGB)
-            #frame = cv2.resize(frame, (224, 224))
-            #frame_fastai = fImage(pil2tensor(frame, dtype=np.float32).div_(255))
-            import ipdb;ipdb.set_trace()
+            # import ipdb;ipdb.set_trace()
             prob, label = self.get_classified_prob(form_img)
             return JsonResponse({
-                'Predicted label': label,
-                'Predicted Prob': prob
+                'Predicted label': str(label),
+                'Predicted Prob': float(prob)
             })
         else:
             return self.render_to_response({
