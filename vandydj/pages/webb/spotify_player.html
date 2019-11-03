@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+
+  <script src="https://sdk.scdn.co/spotify-player.js"></script>
+  <!-- We will insert our code here. -->
+  <script type="text/javascript">
+   var uriset = "{{ uri_set }}";
+   var access_token = "{{ access_token }}";
+  </script>
+    <script type="text/javascript">
+    window.onSpotifyWebPlaybackSDKReady = () => {
+      var player = new Spotify.Player({
+        name: 'Saransh Player',
+        getOAuthToken: cb => { cb(access_token); }
+      });
+
+      // Error handling
+      const message = 'Received error message here'
+      player.addListener('initialization_error', ({ message }) => { console.error(message); });
+      player.addListener('authentication_error', ({ message }) => { console.error(message); });
+      player.addListener('account_error', ({ message }) => { console.error(message); });
+      player.addListener('playback_error', ({ message }) => { console.error(message); });
+
+      // Playback status updates
+      player.addListener('player_state_changed', state => { console.log(state); });
+
+      // Ready
+      player.addListener('ready', ({ device_id }) => {
+        console.log('Ready with Device ID', device_id);
+      });
+
+      // Not Ready
+      player.addListener('not_ready', ({ device_id }) => {
+        console.log('Device ID has gone offline', device_id);
+      });
+
+      // Connect to the player!
+      player.connect();
+       };
+  </script>
+<script type="text/javascript">
+    window.setTimeout(delay, 3000); function delay() { const otherparam = {
+        headers: {
+            'Content-Type': 'application/json',
+             'Authorization': `Bearer ${access_token}`
+        },
+        body: JSON.stringify({'uris': [uriset]}),
+        method: 'PUT'
+    }
+    fetch('https://api.spotify.com/v1/me/player/play?device_id=5868e58da1eba3d28287cb70d092b739d4923839', otherparam);
+    }
+
+    </script>
+</body>
+</html>
