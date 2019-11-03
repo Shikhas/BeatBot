@@ -78,12 +78,6 @@ WSGI_APPLICATION = 'vandydj.wsgi.application'
 
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'vandy',
-        'USER': 'vandy',
-        'PASSWORD': 'vandy',
-        'HOST': 'localhost',
-        'PORT': '5432',
     }
 }
 
