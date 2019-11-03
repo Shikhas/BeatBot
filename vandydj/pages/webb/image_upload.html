@@ -1,11 +1,9 @@
-{% extends 'base.html' %}
-
 {% block content %}
   <form method="post" enctype="multipart/form-data">
     {% csrf_token %}
+    {{ form.errors }}
     {{ form.as_p }}
-    <button type="submit">Upload</button>
+    <button type="submit">Get in sync with your needs and a lot more fun!!</button>
   </form>
 
-  <p><a href="{% url 'image_upload' %}">Return to home</a></p>
 {% endblock %}
