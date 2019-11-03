@@ -1,4 +1,5 @@
 import os
+import urllib, json
 
 import cv2
 import numpy as np
@@ -50,3 +51,9 @@ class UploadImageView(TemplateView):
         label = prediction[0]
         prob = max(prediction[2])
         return prob, label
+
+    @staticmethod
+    def get_classified_gif(label):
+        data = json.loads(
+            urllib.urlopen("http://api.giphy.com/v1/gifs/search?q=f'{label}'&api_key=YOUR_API_KEY&limit=1").read())
+        print(json.dumps(data, sort_keys=True, indent=4))

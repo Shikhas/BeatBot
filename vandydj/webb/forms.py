@@ -52,6 +52,6 @@ class CustomImageField(forms.ImageField):
 
 class ImageUploadForm(forms.Form):
     image = CustomImageField(
-        label="What are you currently upto!!", required=True
+        label="Upload image for DJ", required=True
     )
 

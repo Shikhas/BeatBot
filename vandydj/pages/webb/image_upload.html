@@ -1,9 +1,41 @@
+{% block style %}
+<style>
+  .button {
+    background-color: #4CAF50; /* Green */
+    border: none;
+    color: white;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 20px;
+    margin: 4px 2px;
+    cursor: pointer;
+}
+</style>
+
 {% block content %}
   <form method="post" enctype="multipart/form-data">
     {% csrf_token %}
     {{ form.errors }}
     {{ form.as_p }}
-    <button type="submit">Get in sync with your needs and a lot more fun!!</button>
+    <button type="button", type="submit">Ready to roll !</button>
   </form>
+
+<style>
+img {
+  border-radius: 8px;
+}
+</style>
+
+<img src="VHlogo.jpg" alt="VHLogo" width="300" height="300">
+
+<style>
+img2 {
+  border-radius: 8px;
+}
+</style>
+
+<img src="http://gph.is/1fio4FZ" alt="DJ" width="300" height="300">
 
 {% endblock %}
