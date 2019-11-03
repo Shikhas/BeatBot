@@ -1,3 +1,12 @@
+<html>
+<head>
+<style>
+body {
+  background-image: "{% static "website_background.jpeg" %}" ;
+}
+</style>
+</head>
+
 {% block style %}
 <style>
   .button {
@@ -14,27 +23,47 @@
 }
 </style>
 {% endblock %}
-{% block content %}
 
+{% block content %}
 <style>
 img {
   border-radius: 8px;
+  position: absolute;
+    right: 0px;
+    bottom: 0px;
 }
 </style>
 {% load static %}
 <img src="{% static "VHlogo.png" %}" alt="VHLogo" width="300" height="300">
 
+
 <style>
 img2 {
   border-radius: 8px;
+  display: block;
+  margin-left: auto;
+  margin-right: auto;
+}
+</style>
+<img2 src="{% static "giphyy.gif" %}" alt="DJ" width="300" height="300" style="width:50%;">
+
+<style>
+  .center {
+  position: absolute;
+  left: 0;
+  top: 50%;
+  width: 100%;
+  text-align: center;
+  font-size: 18px;
 }
 </style>
 
-<img src="{% static "giphyy.gif" %}"  alt="DJ" width="300" height="300">
 <form method="post" enctype="multipart/form-data">
     {% csrf_token %}
     {{ form.errors }}
     {{ form.as_p }}
-    <button class="button", type="submit">Ready to roll !</button>
+    <button class="button", class="center", type="submit">Ready to roll !</button>
   </form>
 {% endblock %}
+
+</html>
