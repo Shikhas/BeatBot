@@ -1,11 +1,17 @@
 <!DOCTYPE html>
+{% load static %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <title>Title</title>
 </head>
-<body>
-
+<body background="{% static "website_background.jpeg" %}">
+<h1 align="center", style="color:white;font-family:Comic Sans MS"> BeatBot </h1>
+    <h1 align="center", style="color:white;font-family:Comic Sans MS"> Enjoy {{ predicted_label }} </h1>
+<img src="{% static "VHlogo.png" %}"  alt="VHLogo" width="170" height="170" style="border-radius: 8px;
+        position: absolute;
+        right: 0px;
+        bottom: 0px;">
   <script src="https://sdk.scdn.co/spotify-player.js"></script>
   <!-- We will insert our code here. -->
   <script type="text/javascript">
@@ -44,7 +50,7 @@
        };
   </script>
 <script type="text/javascript">
-    window.setTimeout(delay, 3000); function delay() { const otherparam = {
+    window.setTimeout(delay, 4000); function delay() { const otherparam = {
         headers: {
             'Content-Type': 'application/json',
              'Authorization': `Bearer ${access_token}`
@@ -56,5 +62,8 @@
     }
 
     </script>
+
+
+<iframe src="{{ gif_url }}"  width="480" height="480" frameBorder="0" allowFullScreen style="margin-left: 32%"></iframe>
 </body>
 </html>

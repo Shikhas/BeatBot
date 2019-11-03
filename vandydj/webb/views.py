@@ -20,7 +20,6 @@ from requests_oauthlib import OAuth2Session
 
 
 class UploadImageView(TemplateView):
-    API_KEY = "5ry4t1e9gIwcBEczcQtQz7UkbmS5v3iK"
     template_name = 'webb/image_upload.html'
 
     def get(self, request, *args, **kwargs):
@@ -64,13 +63,16 @@ class UploadImageView(TemplateView):
             prediction_label = str(label)
             prediction_prob = float(prob)
             uri_set = self.get_recommended_tracks(prediction_label, prediction_prob, access_token)
-
+            gif_url = self.get_classified_gif(prediction_label)
+            print(gif_url)
             return TemplateResponse(
                 request=self.request,
                 template='webb/spotify_player.html',
                 context={
                     'uri_set': uri_set[0] or '',
-                    'access_token': access_token
+                    'access_token': access_token,
+                    'gif_url': gif_url,
+                    'predicted_label': prediction_label
                 },
                 **{'content_type': 'text/html'}
             )
@@ -91,9 +93,12 @@ class UploadImageView(TemplateView):
 
     @staticmethod
     def get_classified_gif(label):
+        API_KEY = "5ry4t1e9gIwcBEczcQtQz7UkbmS5v3iK"
         data = json.loads(
-            urllib.request.urlopen("http://api.giphy.com/v1/gifs/search?q=f'{label}'&api_key=API_KEY&limit=1").read())
-        print(json.dumps(data, sort_keys=True, indent=4))
+            urllib.request.urlopen(f"http://api.giphy.com/v1/gifs/search?q={label}&api_key={API_KEY}&limit=10").read())
+        embed_urls = list(map(lambda r: r['embed_url'], data['data']))
+        random.shuffle(embed_urls)
+        return embed_urls[0]
 
     @staticmethod
     def get_tag_from_prediction(prediction_label, prediction_prob):
