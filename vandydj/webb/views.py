@@ -1,5 +1,6 @@
 import os
 import urllib, json
+import urllib.request
 
 import cv2
 import numpy as np
@@ -13,6 +14,7 @@ from vandydj.webb.forms import ImageUploadForm
 
 
 class UploadImageView(TemplateView):
+    API_KEY = "5ry4t1e9gIwcBEczcQtQz7UkbmS5v3iK"
     template_name = 'webb/image_upload.html'
 
     def get(self, request, *args, **kwargs):
@@ -50,5 +52,5 @@ class UploadImageView(TemplateView):
     @staticmethod
     def get_classified_gif(label):
         data = json.loads(
-            urllib.urlopen("http://api.giphy.com/v1/gifs/search?q=f'{label}'&api_key=YOUR_API_KEY&limit=1").read())
+            urllib.request.urlopen("http://api.giphy.com/v1/gifs/search?q=f'{label}'&api_key=API_KEY&limit=1").read())
         print(json.dumps(data, sort_keys=True, indent=4))
