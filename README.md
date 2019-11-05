@@ -1,7 +1,9 @@
 # BeatBot
 
 ## Inspiration
-Who would not want to have a DJ for their small conducted house events? Who would not want to enjoy their own public gatherings instead of worrying about the songs to set in a playlist? While you are having a party or public gathering in your house, there are so many things to carry out and not every time you can afford to have professional DJ even for small gatherings...Right? So,our group thought of creating an application to take care for setting the mood by playing songs for any event or gathering arrangement conducted by you which helps in alleviating one of the main event planning worries. Phew! Now you can enjoy your event or party without worrying about the songs to play
+Who would not want to have a DJ for their small conducted house events? 
+Who would not want to enjoy their own public gatherings instead of worrying about the songs to set in a playlist? 
+While you are having a party or public gathering in your house, there are so many things to carry out and not every time you can afford to have professional DJ even for small gatherings...Right? So,our group thought of creating an application to take care for setting the mood by playing songs for any event or gathering arrangement conducted by you which helps in alleviating one of the main event planning worries. Phew! Now you can enjoy your event or party without worrying about the songs to play
 
 ## What it does
 BeatBot, a full-stack application using python framework and Deep learning basically helps you to play the songs based on event or public gathering held in your house. It is your personal AI-DJ which activates when you upload image of the event. It classifies the event based on the picture you uploaded. For now we have 5 classes into which our model classifies the uploaded image which are as follows:
@@ -35,14 +37,14 @@ Include more classes such as sports gatherings,calm/peaceful gatherings,etc
 Create mobile app where user can take a real time image/video and our project pipeline flows from that
 
 ## Built With
-computer-vision
-css
-deep-learning
-django
-fastai
-giphy
-html
-javascript
-machine-learning
-python
+computer-vision,
+css,
+deep-learning,
+django,
+fastai,
+giphy,
+html,
+javascript,
+machine-learning,
+python,
 spotify
