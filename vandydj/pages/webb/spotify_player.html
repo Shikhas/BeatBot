@@ -1,5 +1,7 @@
 <!DOCTYPE html>
 {% load static %}
+{% load webb_tags %}
+{% csrf_token %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -15,8 +17,8 @@
   <script src="https://sdk.scdn.co/spotify-player.js"></script>
   <!-- We will insert our code here. -->
   <script type="text/javascript">
-   var uriset = "{{ uri_set }}";
    var access_token = "{{ access_token }}";
+   var play_url = 'https://api.spotify.com/v1/me/player/play?device_id=';
   </script>
     <script type="text/javascript">
     window.onSpotifyWebPlaybackSDKReady = () => {
@@ -33,10 +35,28 @@
       player.addListener('playback_error', ({ message }) => { console.error(message); });
 
       // Playback status updates
-      player.addListener('player_state_changed', state => { console.log(state); });
+      player.addListener('player_state_changed', state => {
+          fetch("get_gif_url", {
+    method: "post",
+    credentials: "same-origin",
+    headers: {
+        "Accept": "application/json",
+        "Content-Type": "application/json"
+    },
+    body: JSON.stringify({{ gif_url|safe }})
+}).then(function(response) {
+    return response.json();
+}).then(function(data) {
+    document.getElementById('giffy_frame').src = data['data'];
+}).catch(function(ex) {
+    console.log("parsing failed", ex);
+});
+
+      });
 
       // Ready
       player.addListener('ready', ({ device_id }) => {
+          play_url = play_url.concat(device_id);
         console.log('Ready with Device ID', device_id);
       });
 
@@ -55,15 +75,15 @@
             'Content-Type': 'application/json',
              'Authorization': `Bearer ${access_token}`
         },
-        body: JSON.stringify({'uris': [uriset]}),
+        body: JSON.stringify({{uri_set|safe}}),
         method: 'PUT'
     }
-    fetch('https://api.spotify.com/v1/me/player/play?device_id=5868e58da1eba3d28287cb70d092b739d4923839', otherparam);
+    fetch(play_url, otherparam);
     }
 
     </script>
 
 
-<iframe src="{{ gif_url }}"  width="480" height="480" frameBorder="0" allowFullScreen style="margin-left: 32%"></iframe>
+<iframe id="giffy_frame" width="480" height="480" frameBorder="0" allowFullScreen style="margin-left: 32%"></iframe>
 </body>
 </html>

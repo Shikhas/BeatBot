@@ -9,6 +9,7 @@ import urllib.request
 
 from django.http import JsonResponse, HttpResponseRedirect
 from django.views.generic import TemplateView
+from rest_framework.views import APIView
 from django.conf import settings
 from django.template.response import TemplateResponse
 from django.core.cache import cache
@@ -63,15 +64,14 @@ class UploadImageView(TemplateView):
             prediction_label = str(label)
             prediction_prob = float(prob)
             uri_set = self.get_recommended_tracks(prediction_label, prediction_prob, access_token)
-            gif_url = self.get_classified_gif(prediction_label)
-            print(gif_url)
+            gif_urls = self.get_classified_gif(prediction_label)
             return TemplateResponse(
                 request=self.request,
                 template='webb/spotify_player.html',
                 context={
-                    'uri_set': uri_set[0] or '',
+                    'uri_set': {'uris': uri_set},
                     'access_token': access_token,
-                    'gif_url': gif_url,
+                    'gif_url': {'uris': gif_urls},
                     'predicted_label': prediction_label
                 },
                 **{'content_type': 'text/html'}
@@ -97,8 +97,7 @@ class UploadImageView(TemplateView):
         data = json.loads(
             urllib.request.urlopen(f"http://api.giphy.com/v1/gifs/search?q={label}&api_key={API_KEY}&limit=10").read())
         embed_urls = list(map(lambda r: r['embed_url'], data['data']))
-        random.shuffle(embed_urls)
-        return embed_urls[0]
+        return embed_urls
 
     @staticmethod
     def get_tag_from_prediction(prediction_label, prediction_prob):
@@ -133,3 +132,13 @@ class UploadImageView(TemplateView):
         uri_set = list(uri_set)
         random.shuffle(uri_set)
         return uri_set
+
+
+class GetGiffyView(APIView):
+    def post(self, request, *args, **kwargs):
+        print(request.data)
+        gif_urls = request.data['uris']
+        random_index = random.randint(0, len(gif_urls) - 1)
+        url = gif_urls[random_index]
+        url = url.replace("https://", "http://")
+        return JsonResponse({'data': url})
